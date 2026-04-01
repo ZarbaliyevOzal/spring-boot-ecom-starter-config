@@ -1,5 +1,5 @@
 server:
-  port: 8890
+  port: 4001
 
 spring:
   cloud:
@@ -8,13 +8,13 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-      routes:
-        - id: user-service
-          uri: lb://users-service
-          predicates:
-            - Path=/users/**
-          filters:
-            - StripPrefix=1
+#      routes:
+#        - id: user-service
+#          uri: lb://users-service
+#          predicates:
+#            - Path=/users/**
+#          filters:
+#            - StripPrefix=1
 
 eureka:
   client:
