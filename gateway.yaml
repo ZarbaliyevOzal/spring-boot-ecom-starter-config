@@ -2,19 +2,17 @@ server:
   port: 4001
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/ecom_starter
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-#      routes:
-#        - id: user-service
-#          uri: lb://users-service
-#          predicates:
-#            - Path=/users/**
-#          filters:
-#            - StripPrefix=1
 
 eureka:
   client:
