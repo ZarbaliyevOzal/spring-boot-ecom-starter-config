@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/ecom_starter
   datasource:
     url: jdbc:postgresql://localhost:5432/springboot_ecom_users
     username: postgres
@@ -14,7 +19,7 @@ spring:
         format_sql: true
 
 server:
-  port: 8891
+  port: 10010
 
 eureka:
   client:
