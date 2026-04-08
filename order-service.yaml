@@ -19,6 +19,16 @@ spring:
         format_sql: true
   jackson:
     property-naming-strategy: SNAKE_CASE
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: my-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 server:
   port: 10012
@@ -27,3 +37,13 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+app:
+  kafka:
+    topics:
+      order-events:
+        name: order-events
+        partition: 2
+        replication-factor: 1
+        retention-ms: 604800000               # 7 days
+        cleanup-policy: delete
