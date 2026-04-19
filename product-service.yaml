@@ -17,6 +17,26 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      accept-empty-string-as-null-object: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: product-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.use.type.headers: false
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: java.util.Map
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 server:
   port: 10011
@@ -25,3 +45,19 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+app:
+  kafka:
+    topics:
+      product-commands:
+        name: product-commands
+        partition: 2
+        replication-factor: 1
+        retention-ms: 604800000               # 7 days
+        cleanup-policy: delete
+      product-command-events:
+        name: product-command-events
+        partition: 2
+        replication-factor: 1
+        retention-ms: 604800000               # 7 days
+        cleanup-policy: delete
